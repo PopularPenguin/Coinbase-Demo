@@ -19,7 +19,7 @@ import kotlinx.coroutines.withContext
 class MainActivity : AppCompatActivity() {
 
     private val viewModel by viewModels<MainViewModel>()
-    private val jobs = mutableListOf<Job>()
+    private lateinit var job: Job
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,21 +41,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun subscribeViews() {
-        val btcJob = CoroutineScope(IO).launch {
-            viewModel.getBtcPrice().collect { price ->
+        job = CoroutineScope(IO).launch {
+            viewModel.getTicker().collect { ticker ->
                 withContext(Main) {
-                    binding.btcPriceTv.text = "1 BTC: $$price"
+                    when (ticker?.id) {
+                        "BTC-USD" -> binding.btcPriceTv.text = "1 BTC: $${ticker.price}"
+                        "ETH-USD" -> binding.ethPriceTv.text = "1 ETH: $${ticker.price}"
+                    }
                 }
             }
         }
-
-        jobs.add(btcJob)
     }
 
     private fun unsubscribeViews() {
-        for (job in jobs) {
+        if (::job.isInitialized) {
             job.cancel()
         }
-        jobs.clear()
     }
 }

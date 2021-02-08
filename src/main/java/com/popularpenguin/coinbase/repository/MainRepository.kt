@@ -12,7 +12,7 @@ class MainRepository(private val client: CoinbaseClient) {
         client.disconnect()
     }
 
-    fun getBtcPrice(): Flow<String> {
-        return client.btcPrice
+    fun getTicker(): Flow<CoinTicker?> {
+        return client.ticker
     }
 }

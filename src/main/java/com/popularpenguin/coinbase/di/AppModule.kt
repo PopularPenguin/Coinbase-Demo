@@ -3,6 +3,7 @@ package com.popularpenguin.coinbase.di
 import com.popularpenguin.coinbase.repository.CoinbaseClient
 import com.popularpenguin.coinbase.repository.MainRepository
 import com.popularpenguin.coinbase.util.Constants
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,8 +16,14 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideCoinbaseClient(): CoinbaseClient {
-        return CoinbaseClient(Constants.SOCKET_BASE_URL)
+    fun provideMoshi(): Moshi {
+        return Moshi.Builder().build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideCoinbaseClient(moshi: Moshi): CoinbaseClient {
+        return CoinbaseClient(Constants.SOCKET_BASE_URL, moshi)
     }
 
     @Singleton

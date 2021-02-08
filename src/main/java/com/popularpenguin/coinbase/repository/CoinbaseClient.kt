@@ -11,11 +11,12 @@ import java.net.URI
 import javax.net.ssl.SSLSocketFactory
 
 @ExperimentalCoroutinesApi
-class CoinbaseClient(private val uri: String) {
+class CoinbaseClient(private val uri: String, private val moshi: Moshi) {
 
     private val TAG = "CoinbaseClient"
 
-    var btcPrice = MutableStateFlow<String>("0")
+    var ticker = MutableStateFlow<CoinTicker?>(null)
+        private set
 
     private lateinit var client: WebSocketClient
 
@@ -41,7 +42,7 @@ class CoinbaseClient(private val uri: String) {
 
             override fun onMessage(message: String?) {
                 Log.d(TAG, "onMessage: $message")
-                setUpBtcPriceText(message)
+                setUpPriceText(message)
             }
 
             override fun onClose(code: Int, reason: String?, remote: Boolean) {
@@ -59,18 +60,17 @@ class CoinbaseClient(private val uri: String) {
         client.send(
             "{\n" +
                     "    \"type\": \"subscribe\",\n" +
-                    "    \"channels\": [{ \"name\": \"ticker\", \"product_ids\": [\"BTC-USD\"] }]\n" +
+                    "    \"channels\": [{ \"name\": \"ticker\", \"product_ids\": [\"BTC-USD\", \"ETH-USD\"] }]\n" +
                     "}"
         )
     }
 
-    private fun setUpBtcPriceText(message: String?) {
+    private fun setUpPriceText(message: String?) {
         message?.let {
-            val moshi = Moshi.Builder().build()
-            val adapter: JsonAdapter<BitcoinTicker> = moshi.adapter(BitcoinTicker::class.java)
-            val bitcoin = adapter.fromJson(message)
+            val adapter: JsonAdapter<CoinTicker> = moshi.adapter(CoinTicker::class.java)
+            val coin = adapter.fromJson(message)
 
-            btcPrice.value = bitcoin?.price ?: "NA"
+            ticker.value = coin
         }
     }
 
