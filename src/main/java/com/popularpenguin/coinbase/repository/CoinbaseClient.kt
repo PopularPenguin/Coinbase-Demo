@@ -3,30 +3,29 @@ package com.popularpenguin.coinbase.repository
 import android.util.Log
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
 import java.net.URI
 import javax.net.ssl.SSLSocketFactory
 
-class CoinbaseClient(uri: String) {
+@ExperimentalCoroutinesApi
+class CoinbaseClient(private val uri: String) {
 
     private val TAG = "CoinbaseClient"
 
     var btcPrice = MutableStateFlow<String>("0")
 
-    private val client: WebSocketClient
+    private lateinit var client: WebSocketClient
 
-    init {
+    fun connect() {
         val socketFactory: SSLSocketFactory = SSLSocketFactory.getDefault() as SSLSocketFactory
 
         client = createWebSocketClient(URI(uri)).apply {
             setSocketFactory(socketFactory)
+            connect()
         }
-    }
-
-    fun connect() {
-        client.connect()
     }
 
     fun disconnect() {
@@ -60,7 +59,7 @@ class CoinbaseClient(uri: String) {
         client.send(
             "{\n" +
                     "    \"type\": \"subscribe\",\n" +
-                    "    \"channels\": [{ \"name\": \"ticker\", \"product_ids\": [\"BTC-EUR\"] }]\n" +
+                    "    \"channels\": [{ \"name\": \"ticker\", \"product_ids\": [\"BTC-USD\"] }]\n" +
                     "}"
         )
     }

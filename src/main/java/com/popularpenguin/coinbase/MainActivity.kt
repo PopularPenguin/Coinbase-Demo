@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         val btcJob = CoroutineScope(IO).launch {
             viewModel.getBtcPrice().collect { price ->
                 withContext(Main) {
-                    binding.btcPriceTv.text = "1 BTC: ${price} €"
+                    binding.btcPriceTv.text = "1 BTC: $$price"
                 }
             }
         }
@@ -56,5 +56,6 @@ class MainActivity : AppCompatActivity() {
         for (job in jobs) {
             job.cancel()
         }
+        jobs.clear()
     }
 }
