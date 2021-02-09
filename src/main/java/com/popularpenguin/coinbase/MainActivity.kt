@@ -3,18 +3,18 @@ package com.popularpenguin.coinbase
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.popularpenguin.coinbase.databinding.ActivityMainBinding
+import com.popularpenguin.coinbase.repository.CoinTicker
 import com.popularpenguin.coinbase.viewmodel.MainViewModel
+import com.popularpenguin.coinbase.viewmodel.MainViewModel.TickerUIState
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect // needed for collect to register correctly
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 // https://medium.com/@fahri.c93/android-tutorial-part-2-using-java-websocket-with-kotlin-dd3105bd3eed
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
@@ -28,29 +28,40 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.onResume()
+    override fun onStart() {
+        super.onStart()
+
+        viewModel.start()
         subscribeViews()
     }
 
-    override fun onPause() {
-        super.onPause()
-        viewModel.onPause()
+    override fun onStop() {
+        viewModel.stop()
         unsubscribeViews()
+
+        super.onStop()
     }
 
     private fun subscribeViews() {
-        job = CoroutineScope(IO).launch {
-            viewModel.getTicker().collect { ticker ->
-                withContext(Main) {
-                    when (ticker?.id) {
-                        "BTC-USD" -> binding.btcPriceTv.text = "1 BTC: $${ticker.price}"
-                        "ETH-USD" -> binding.ethPriceTv.text = "1 ETH: $${ticker.price}"
-                    }
+        job = lifecycleScope.launchWhenStarted {
+            viewModel.uiState.collect { uiState ->
+                when (uiState) {
+                    is TickerUIState.Success -> showTickerData(uiState.ticker)
+                    is TickerUIState.Error -> showError(uiState.exception)
                 }
             }
         }
+    }
+
+    private fun showTickerData(ticker: CoinTicker?) {
+        when (ticker?.id) {
+            "BTC-USD" -> binding.btcPriceTv.text = "1 BTC: $${ticker.price}"
+            "ETH-USD" -> binding.ethPriceTv.text = "1 ETH: $${ticker.price}"
+        }
+    }
+
+    private fun showError(exception: Throwable) {
+        // ...
     }
 
     private fun unsubscribeViews() {

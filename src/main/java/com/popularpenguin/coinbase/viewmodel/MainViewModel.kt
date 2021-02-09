@@ -2,12 +2,19 @@ package com.popularpenguin.coinbase.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.popularpenguin.coinbase.repository.CoinTicker
 import com.popularpenguin.coinbase.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @HiltViewModel
 class MainViewModel
 @Inject
@@ -16,15 +23,26 @@ constructor(
     private val repository: MainRepository
 ) : ViewModel() {
 
-    fun onResume() {
+    private lateinit var job: Job
+    private val _uiState = MutableStateFlow(TickerUIState.Success(null))
+    val uiState: StateFlow<TickerUIState> = _uiState
+
+    fun start() {
         repository.connect()
+        job = viewModelScope.launch {
+            repository.getTicker().collect { ticker ->
+                _uiState.value = TickerUIState.Success(ticker)
+            }
+        }
     }
 
-    fun onPause() {
+    fun stop() {
+        job.cancel()
         repository.disconnect()
     }
 
-    fun getTicker(): Flow<CoinTicker?> {
-        return repository.getTicker()
+    sealed class TickerUIState {
+        data class Success(val ticker: CoinTicker?): TickerUIState()
+        data class Error(val exception: Throwable): TickerUIState()
     }
 }
