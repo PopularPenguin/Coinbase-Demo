@@ -15,12 +15,12 @@ val BITCOIN_SUBSCRIBE_MESSAGE = Subscribe(
     productIds = listOf("BTC-USD"),
     channels = listOf("ticker")
 )
-val DOGE_SUBSCRIBE_MESSAGE = Subscribe(
-    productIds = listOf("DOGE-USD"),
+val ETHEREUM_SUBSCRIBE_MESSAGE = Subscribe(
+    productIds = listOf("ETH-USD"),
     channels = listOf("ticker")
 )
-val ETHEREUM_SUBSCRIBE_MESSAGE = Subscribe(
-    productIds = listOf("BTC-USD", "ETH-USD"),
+val LITECOIN_SUBSCRIBE_MESSAGE = Subscribe(
+    productIds = listOf("LTC-USD"),
     channels = listOf("ticker")
 )
 val ALL_SUBSCRIBE_MESSAGE = Subscribe(
