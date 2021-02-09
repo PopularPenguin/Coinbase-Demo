@@ -58,13 +58,9 @@ class CoinbaseClient(private val uri: String, private val moshi: Moshi) {
 
     private fun subscribe() {
         val adapter: JsonAdapter<Subscribe> = moshi.adapter(Subscribe::class.java)
-        val btcMessage = adapter.toJson(BITCOOIN_SUBSCRIBE_MESSAGE)
-        val ethMessage = adapter.toJson(ETHEREUM_SUBSCRIBE_MESSAGE)
+        val message = adapter.toJson(ALL_SUBSCRIBE_MESSAGE)
 
-        client.apply {
-            send(btcMessage)
-            send(ethMessage)
-        }
+        client.send(message)
     }
 
     private fun setUpPriceText(message: String?) {

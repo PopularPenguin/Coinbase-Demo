@@ -55,8 +55,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun showTickerData(ticker: CoinTicker?) {
         when (ticker?.id) {
-            "BTC-USD" -> binding.btcPriceTv.text = "1 BTC: $${ticker.price}"
-            "ETH-USD" -> binding.ethPriceTv.text = "1 ETH: $${ticker.price}"
+            "BTC-USD" -> binding.btcPriceView.text = "1 BTC: $${ticker.price}"
+            "ETH-USD" -> binding.ethPriceView.text = "1 ETH: $${ticker.price}"
+            "LTC-USD" -> binding.ltcPriceView.text = "1 LTC: $${ticker.price}"
         }
     }
 

@@ -11,8 +11,12 @@ data class Subscribe(
     val channels: List<String>
 )
 
-val BITCOOIN_SUBSCRIBE_MESSAGE = Subscribe(
-    productIds = listOf("BTC-USD", "ETH-USD"),
+val BITCOIN_SUBSCRIBE_MESSAGE = Subscribe(
+    productIds = listOf("BTC-USD"),
+    channels = listOf("ticker")
+)
+val DOGE_SUBSCRIBE_MESSAGE = Subscribe(
+    productIds = listOf("DOGE-USD"),
     channels = listOf("ticker")
 )
 val ETHEREUM_SUBSCRIBE_MESSAGE = Subscribe(
@@ -20,7 +24,7 @@ val ETHEREUM_SUBSCRIBE_MESSAGE = Subscribe(
     channels = listOf("ticker")
 )
 val ALL_SUBSCRIBE_MESSAGE = Subscribe(
-    productIds = listOf("BTC-USD", "ETH-USD"),
+    productIds = listOf("BTC-USD", "ETH-USD", "LTC-USD"),
     channels = listOf("ticker")
 )
 
