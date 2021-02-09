@@ -1,0 +1,36 @@
+package com.popularpenguin.coinbase.repository
+
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
+data class Subscribe(
+    val type: String = "subscribe",
+    @Json(name = "product_ids")
+    val productIds: List<String>,
+    val channels: List<String>
+)
+
+val BITCOOIN_SUBSCRIBE_MESSAGE = Subscribe(
+    productIds = listOf("BTC-USD", "ETH-USD"),
+    channels = listOf("ticker")
+)
+val ETHEREUM_SUBSCRIBE_MESSAGE = Subscribe(
+    productIds = listOf("BTC-USD", "ETH-USD"),
+    channels = listOf("ticker")
+)
+val ALL_SUBSCRIBE_MESSAGE = Subscribe(
+    productIds = listOf("BTC-USD", "ETH-USD"),
+    channels = listOf("ticker")
+)
+
+@JsonClass(generateAdapter = true)
+data class Unsubscribe(
+    val type: String = "unsubscribe",
+    val channels: String = "ticker"
+)
+
+val UNSUBSCRIBE_MESSAGE = Unsubscribe()
+
+
+

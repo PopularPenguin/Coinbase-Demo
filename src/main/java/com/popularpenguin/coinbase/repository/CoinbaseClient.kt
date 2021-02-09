@@ -57,12 +57,14 @@ class CoinbaseClient(private val uri: String, private val moshi: Moshi) {
     }
 
     private fun subscribe() {
-        client.send(
-            "{\n" +
-                    "    \"type\": \"subscribe\",\n" +
-                    "    \"channels\": [{ \"name\": \"ticker\", \"product_ids\": [\"BTC-USD\", \"ETH-USD\"] }]\n" +
-                    "}"
-        )
+        val adapter: JsonAdapter<Subscribe> = moshi.adapter(Subscribe::class.java)
+        val btcMessage = adapter.toJson(BITCOOIN_SUBSCRIBE_MESSAGE)
+        val ethMessage = adapter.toJson(ETHEREUM_SUBSCRIBE_MESSAGE)
+
+        client.apply {
+            send(btcMessage)
+            send(ethMessage)
+        }
     }
 
     private fun setUpPriceText(message: String?) {
@@ -75,11 +77,9 @@ class CoinbaseClient(private val uri: String, private val moshi: Moshi) {
     }
 
     private fun unsubscribe() {
-        client.send(
-            "{\n" +
-                    "    \"type\": \"unsubscribe\",\n" +
-                    "    \"channels\": [\"ticker\"]\n" +
-                    "}"
-        )
+        val adapter : JsonAdapter<Unsubscribe> = moshi.adapter(Unsubscribe::class.java)
+        val unsubscribeMessage = adapter.toJson(UNSUBSCRIBE_MESSAGE)
+
+        client.send(unsubscribeMessage)
     }
 }
