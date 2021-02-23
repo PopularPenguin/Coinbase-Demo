@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.popularpenguin.coinbase.databinding.ActivityMainBinding
 import com.popularpenguin.coinbase.repository.CoinTicker
+import com.popularpenguin.coinbase.util.Format
 import com.popularpenguin.coinbase.viewmodel.MainViewModel
 import com.popularpenguin.coinbase.viewmodel.MainViewModel.TickerUIState
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,12 +32,12 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        viewModel.start()
+        viewModel.connect()
         subscribeViews()
     }
 
     override fun onStop() {
-        viewModel.stop()
+        viewModel.disconnect()
         unsubscribeViews()
 
         super.onStop()
@@ -53,11 +54,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showTickerData(ticker: CoinTicker?) {
-        when (ticker?.id) {
-            "BTC-USD" -> binding.btcPriceView.text = "1 BTC: $${ticker.price}"
-            "ETH-USD" -> binding.ethPriceView.text = "1 ETH: $${ticker.price}"
-            "LTC-USD" -> binding.ltcPriceView.text = "1 LTC: $${ticker.price}"
+    private fun showTickerData(coinTicker: CoinTicker?) {
+        coinTicker?.let { ticker ->
+            val formattedPrice = Format.formatUS(ticker.price)
+
+            when (ticker.id) {
+                "BTC-USD" -> binding.btcPriceView.text = "1 BTC: $formattedPrice"
+                "ETH-USD" -> binding.ethPriceView.text = "1 ETH: $formattedPrice"
+                "LTC-USD" -> binding.ltcPriceView.text = "1 LTC: $formattedPrice"
+            }
         }
     }
 

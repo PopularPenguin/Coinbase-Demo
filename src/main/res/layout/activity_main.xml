@@ -1,43 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutDescription="@xml/motion"
+    android:background="@android:color/darker_gray"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/btcPriceView"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btcCardView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:textSize="40sp"
-        tools:text="1 BTC $43432.33"
+        app:cardBackgroundColor="@android:color/holo_red_light"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="1dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:id="@+id/btcPriceView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            tools:text="1 BTC $43432.33"/>
+    </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/ethPriceView"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/ethCardView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:textSize="40sp"
-        tools:text="1 ETH $1234.56"
+        app:cardBackgroundColor="@android:color/holo_blue_light"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="1dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btcPriceView" />
+        app:layout_constraintTop_toBottomOf="@id/btcCardView">
+        <TextView
+            android:id="@+id/ethPriceView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            tools:text="1 ETH $1234.56" />
+    </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/ltcPriceView"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/ltcCardView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:textSize="40sp"
-        tools:text="1 DOGE $0.02"
+        app:cardBackgroundColor="@android:color/holo_green_dark"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="1dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ethPriceView" />
+        app:layout_constraintTop_toBottomOf="@id/ethCardView" >
+        <TextView
+            android:id="@+id/ltcPriceView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            tools:text="1 LTC $0.02"
+            />
+    </androidx.cardview.widget.CardView>
 
-</androidx.constraintlayout.motion.widget.MotionLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

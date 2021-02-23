@@ -3,70 +3,6 @@
     xmlns:motion="http://schemas.android.com/apk/res-auto">
 
     <Transition
-        motion:constraintSetStart="@+id/btcStart"
-        motion:constraintSetEnd="@+id/btcEnd"
-        motion:duration="1000">
-        <OnSwipe
-            motion:touchAnchorId="@+id/btcPriceView"
-            motion:touchAnchorSide="bottom"
-            motion:dragDirection="dragDown" />
-    </Transition>
-
-    <ConstraintSet android:id="@+id/btcStart">
-        <Constraint
-            android:id="@+id/btcPriceView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintTop_toTopOf="@+id/parent" />
-    </ConstraintSet>
-
-    <ConstraintSet android:id="@+id/btcEnd">
-        <Constraint
-            android:id="@+id/btcPriceView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            motion:layout_constraintBottom_toBottomOf="parent"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintStart_toStartOf="parent" />
-    </ConstraintSet>
-
-    <Transition
-        motion:constraintSetStart="@+id/ethStart"
-        motion:constraintSetEnd="@+id/ethEnd"
-        motion:duration="1000">
-        <OnSwipe
-            motion:touchAnchorId="@+id/ethPriceView"
-            motion:touchAnchorSide="bottom"
-            motion:dragDirection="dragDown" />
-    </Transition>
-
-    <ConstraintSet android:id="@+id/ethStart">
-        <Constraint
-            android:id="@+id/ethPriceView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintTop_toBottomOf="@+id/btcPriceView" />
-    </ConstraintSet>
-
-    <ConstraintSet android:id="@+id/ethEnd">
-        <Constraint
-            android:id="@+id/ethPriceView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            motion:layout_constraintBottom_toBottomOf="parent"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintStart_toStartOf="parent" />
-    </ConstraintSet>
-
-    <Transition
         motion:constraintSetStart="@+id/ltcStart"
         motion:constraintSetEnd="@+id/ltcEnd"
         motion:duration="1000">
@@ -74,6 +10,14 @@
             motion:touchAnchorId="@+id/ltcPriceView"
             motion:touchAnchorSide="bottom"
             motion:dragDirection="dragDown" />
+        <KeyFrameSet>
+            <KeyAttribute
+                android:scaleX="0.75"
+                android:scaleY="0.75"
+                android:alpha="0.25"
+                motion:framePosition="100"
+                motion:motionTarget="@+id/ltcPriceView" />
+        </KeyFrameSet>
     </Transition>
 
     <ConstraintSet android:id="@+id/ltcStart">

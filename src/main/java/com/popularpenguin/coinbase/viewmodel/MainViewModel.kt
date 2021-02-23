@@ -27,7 +27,7 @@ constructor(
     private val _uiState = MutableStateFlow(TickerUIState.Success(null))
     val uiState: StateFlow<TickerUIState> = _uiState
 
-    fun start() {
+    fun connect() {
         repository.connect()
         job = viewModelScope.launch {
             repository.getTicker().collect { ticker ->
@@ -36,7 +36,7 @@ constructor(
         }
     }
 
-    fun stop() {
+    fun disconnect() {
         job.cancel()
         repository.disconnect()
     }
