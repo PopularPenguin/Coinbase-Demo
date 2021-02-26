@@ -11,8 +11,10 @@ import com.popularpenguin.coinbase.viewmodel.MainViewModel
 import com.popularpenguin.coinbase.viewmodel.MainViewModel.TickerUIState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect // needed for collect to register correctly
+import kotlinx.coroutines.flow.collect // needed for Flow collect function to register correctly
 import kotlinx.coroutines.Job
+
+// Simple Coinbase web socket ticker viewer with Kotlin Flow, Hilt, and MVVM architecture
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint

@@ -10,10 +10,9 @@ import org.java_websocket.handshake.ServerHandshake
 import java.net.URI
 import javax.net.ssl.SSLSocketFactory
 
+// Coinbase websocket
 @ExperimentalCoroutinesApi
 class CoinbaseClient(private val uri: String, private val moshi: Moshi) {
-
-    private val TAG = "CoinbaseClient"
 
     var ticker = MutableStateFlow<CoinTicker?>(null)
         private set
@@ -36,23 +35,18 @@ class CoinbaseClient(private val uri: String, private val moshi: Moshi) {
     private fun createWebSocketClient(coinbaseUri: URI): WebSocketClient {
         return object : WebSocketClient(coinbaseUri) {
             override fun onOpen(handshakedata: ServerHandshake?) {
-                Log.d(TAG, "onOpen")
                 subscribe()
             }
 
             override fun onMessage(message: String?) {
-                Log.d(TAG, "onMessage: $message")
                 setUpPriceText(message)
             }
 
             override fun onClose(code: Int, reason: String?, remote: Boolean) {
-                Log.d(TAG, "onClose")
                 unsubscribe()
             }
 
-            override fun onError(ex: Exception?) {
-                Log.e(TAG, "onError: ${ex?.message}")
-            }
+            override fun onError(ex: Exception?) {}
         }
     }
 
