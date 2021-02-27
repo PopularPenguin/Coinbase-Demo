@@ -1,6 +1,5 @@
 package com.popularpenguin.coinbase.repository
 
-import android.util.Log
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
