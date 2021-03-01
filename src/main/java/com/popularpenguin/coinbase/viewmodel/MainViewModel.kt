@@ -8,6 +8,7 @@ import com.popularpenguin.coinbase.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
@@ -32,6 +33,7 @@ constructor(
         job = viewModelScope.launch {
             repository.getTicker().collect { ticker ->
                 _uiState.value = TickerUIState.Success(ticker)
+                delay(1000L) // rate limit for UI
             }
         }
     }

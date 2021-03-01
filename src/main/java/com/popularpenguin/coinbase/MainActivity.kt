@@ -60,9 +60,9 @@ class MainActivity : AppCompatActivity() {
             val formattedPrice = Format.formatUS(ticker.price)
 
             when (ticker.id) {
-                "BTC-USD" -> binding.btcPriceView.text = "1 BTC: $formattedPrice"
-                "ETH-USD" -> binding.ethPriceView.text = "1 ETH: $formattedPrice"
-                "LTC-USD" -> binding.ltcPriceView.text = "1 LTC: $formattedPrice"
+                "BTC-USD" -> binding.btcPriceView.text = "BTC: $formattedPrice"
+                "ETH-USD" -> binding.ethPriceView.text = "ETH: $formattedPrice"
+                "LTC-USD" -> binding.ltcPriceView.text = "LTC: $formattedPrice"
             }
         }
     }

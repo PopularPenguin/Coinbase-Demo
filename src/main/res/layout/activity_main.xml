@@ -59,14 +59,15 @@
                 android:layout_gravity="center"
                 android:layout_marginEnd="16dp"
                 android:gravity="center"
+                android:text="BTC: $0.00"
                 android:textColor="@color/white"
-                android:textSize="40sp"
+                android:textSize="32sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/btcImage"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
-                tools:text="BTC $43432.33" />
+                tools:text="BTC: $43432.33" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
@@ -109,13 +110,14 @@
                 android:layout_gravity="center"
                 android:layout_marginEnd="16dp"
                 android:gravity="center"
+                android:text="ETH: $0.00"
                 android:textColor="@color/black"
-                android:textSize="40sp"
+                android:textSize="32sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ethImage"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="ETH $1234.56" />
+                tools:text="ETH: $1234.56" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
@@ -158,13 +160,14 @@
                 android:layout_gravity="center"
                 android:layout_marginEnd="16dp"
                 android:gravity="center"
+                android:text="LTC: $0.00"
                 android:textColor="@color/black"
-                android:textSize="40sp"
+                android:textSize="32sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ltcImage"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="LTC $0.02" />
+                tools:text="LTC: $0.02" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
